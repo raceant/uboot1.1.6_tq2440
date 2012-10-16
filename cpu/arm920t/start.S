@@ -145,11 +145,14 @@ reset:
 	str	r1, [r0]
 # endif
 
+#if 0
 	/* FCLK:HCLK:PCLK = 1:2:4 */
 	/* default FCLK is 120 MHz ! */
 	ldr	r0, =CLKDIVN
 	mov	r1, #3
 	str	r1, [r0]
+#endif
+
 #endif	/* CONFIG_S3C2400 || CONFIG_S3C2410 */
 
 	/*
@@ -157,15 +160,26 @@ reset:
 	 * not when booting from ram!
 	 */
 #ifndef CONFIG_SKIP_LOWLEVEL_INIT
-	bl	cpu_init_crit
+	@bl	cpu_init_crit
 #endif
+
+	/* Set up the stack						    */
+stack_setup:
+	ldr	r0, _TEXT_BASE		/* upper 128 KiB: relocated uboot   */
+	sub	r0, r0, #CFG_MALLOC_LEN	/* malloc area                      */
+	sub	r0, r0, #CFG_GBL_DATA_SIZE /* bdinfo                        */
+#ifdef CONFIG_USE_IRQ
+	sub	r0, r0, #(CONFIG_STACKSIZE_IRQ+CONFIG_STACKSIZE_FIQ)
+#endif
+	sub	sp, r0, #12		/* leave 3 words for abort-stack    */
+	bl	clock_init
 
 #ifndef CONFIG_SKIP_RELOCATE_UBOOT
 relocate:				/* relocate U-Boot to RAM	    */
 	adr	r0, _start		/* r0 <- current position of code   */
 	ldr	r1, _TEXT_BASE		/* test if we run from flash or RAM */
 	cmp     r0, r1                  /* don't reloc during debug         */
-	beq     stack_setup
+	beq     clear_bss
 
 	ldr	r2, _armboot_start
 	ldr	r3, _bss_start
@@ -178,16 +192,6 @@ copy_loop:
 	cmp	r0, r2			/* until source end addreee [r2]    */
 	ble	copy_loop
 #endif	/* CONFIG_SKIP_RELOCATE_UBOOT */
-
-	/* Set up the stack						    */
-stack_setup:
-	ldr	r0, _TEXT_BASE		/* upper 128 KiB: relocated uboot   */
-	sub	r0, r0, #CFG_MALLOC_LEN	/* malloc area                      */
-	sub	r0, r0, #CFG_GBL_DATA_SIZE /* bdinfo                        */
-#ifdef CONFIG_USE_IRQ
-	sub	r0, r0, #(CONFIG_STACKSIZE_IRQ+CONFIG_STACKSIZE_FIQ)
-#endif
-	sub	sp, r0, #12		/* leave 3 words for abort-stack    */
 
 clear_bss:
 	ldr	r0, _bss_start		/* find start of bss segment        */

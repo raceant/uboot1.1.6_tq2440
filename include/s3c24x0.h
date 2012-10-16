@@ -126,6 +126,7 @@ typedef struct {
 	S3C24X0_REG32	CLKCON;
 	S3C24X0_REG32	CLKSLOW;
 	S3C24X0_REG32	CLKDIVN;
+	S3C24X0_REG32	CAMDIVN;	/* for s3c2440 by tq2440*/
 } /*__attribute__((__packed__))*/ S3C24X0_CLOCK_POWER;
 
 

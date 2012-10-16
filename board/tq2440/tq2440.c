@@ -70,21 +70,6 @@ int board_init (void)
 	S3C24X0_CLOCK_POWER * const clk_power = S3C24X0_GetBase_CLOCK_POWER();
 	S3C24X0_GPIO * const gpio = S3C24X0_GetBase_GPIO();
 
-	/* to reduce PLL lock time, adjust the LOCKTIME register */
-	clk_power->LOCKTIME = 0xFFFFFF;
-
-	/* configure MPLL */
-	clk_power->MPLLCON = ((M_MDIV << 12) + (M_PDIV << 4) + M_SDIV);
-
-	/* some delay between MPLL and UPLL */
-	delay (4000);
-
-	/* configure UPLL */
-	clk_power->UPLLCON = ((U_M_MDIV << 12) + (U_M_PDIV << 4) + U_M_SDIV);
-
-	/* some delay between MPLL and UPLL */
-	delay (8000);
-
 	/* set up the I/O ports */
 	gpio->GPACON = 0x007FFFFF;
 	gpio->GPBCON = 0x00044555;
@@ -102,8 +87,8 @@ int board_init (void)
 	gpio->GPHCON = 0x002AFAAA;
 	gpio->GPHUP = 0x000007FF;
 
-	/* arch number of SMDK2410-Board */
-	gd->bd->bi_arch_number = MACH_TYPE_SMDK2410;
+	/* arch number of TQ2440-Board */
+	gd->bd->bi_arch_number = MACH_TYPE_S3C2440;
 
 	/* adress of boot parameters */
 	gd->bd->bi_boot_params = 0x30000100;

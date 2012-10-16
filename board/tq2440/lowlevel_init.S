@@ -39,7 +39,8 @@
  * Taken from linux/arch/arm/boot/compressed/head-s3c2410.S
  *
  * Copyright (C) 2002 Samsung Electronics SW.LEE  <hitchcar@sec.samsung.com>
- *
+
+ * it is Modifed for tq2440 by raceant 2012-10-16
  */
 
 #define BWSCON	0x48000000

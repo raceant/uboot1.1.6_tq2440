@@ -121,14 +121,14 @@ reset:
 # define pWTCON		0x15300000
 # define INTMSK		0x14400008	/* Interupt-Controller base addresses */
 # define CLKDIVN	0x14800014	/* clock divisor register */
-#elif defined(CONFIG_S3C2410)
+#elif defined(CONFIG_S3C2410) || defined(CONFIG_S3C2440)
 # define pWTCON		0x53000000
 # define INTMSK		0x4A000008	/* Interupt-Controller base addresses */
 # define INTSUBMSK	0x4A00001C
 # define CLKDIVN	0x4C000014	/* clock divisor register */
 #endif
 
-#if defined(CONFIG_S3C2400) || defined(CONFIG_S3C2410)
+#if defined(CONFIG_S3C2400) || defined(CONFIG_S3C2410) || defined(CONFIG_S3C2440)
 	ldr     r0, =pWTCON
 	mov     r1, #0x0
 	str     r1, [r0]
@@ -139,7 +139,7 @@ reset:
 	mov	r1, #0xffffffff
 	ldr	r0, =INTMSK
 	str	r1, [r0]
-# if defined(CONFIG_S3C2410)
+# if defined(CONFIG_S3C2410)  || defined(CONFIG_S3C2440)
 	ldr	r1, =0x3ff
 	ldr	r0, =INTSUBMSK
 	str	r1, [r0]

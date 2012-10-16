@@ -1,5 +1,11 @@
+/*
+ * the boot_init.c file of tq2440
+ * by liulei
+ * date: 2012-10-16
+ */
+
 #include <common.h>
-#include <s3c2410.h>
+#include <s3c2440.h>
 
 #define GSTATUS1        (*(volatile unsigned int *)0x560000B0)
 
@@ -44,10 +50,10 @@ void clock_init(void)
 #endif
 	/* change to asynchronous bus mod */
 	__asm__(    "mrc    p15, 0, r1, c1, c0, 0\n"    /* read ctrl register   */
-                    "orr    r1, r1, #0xc0000000\n"      /* Asynchronous         */
-                    "mcr    p15, 0, r1, c1, c0, 0\n"    /* write ctrl register  */
-                    :::"r1"
-                    );
+				"orr    r1, r1, #0xc0000000\n"      /* Asynchronous         */
+				"mcr    p15, 0, r1, c1, c0, 0\n"    /* write ctrl register  */
+				:::"r1"
+		   );
 
 	/* to reduce PLL lock time, adjust the LOCKTIME register */
 	clk_power->LOCKTIME = 0xFFFFFF;

@@ -24,9 +24,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  * MA 02111-1307 USA
  */
-
+/*
+ * Modifed for tq2440 by liulei  2012-10-16
+ */
 #include <common.h>
-#include <s3c2410.h>
+#include <s3c2440.h>
 
 DECLARE_GLOBAL_DATA_PTR;
 

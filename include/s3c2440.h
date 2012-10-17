@@ -97,6 +97,12 @@ static inline S3C2410_NAND * const S3C2410_GetBase_NAND(void)
 {
 	return (S3C2410_NAND * const)S3C2410_NAND_BASE;
 }
+/* for s3c2440,  */
+static inline S3C2440_NAND * const S3C2440_GetBase_NAND(void)
+{
+	return (S3C2440_NAND * const)S3C2410_NAND_BASE;
+}
+
 static inline S3C24X0_UART * const S3C24X0_GetBase_UART(S3C24X0_UARTS_NR nr)
 {
 	return (S3C24X0_UART * const)(S3C24X0_UART_BASE + (nr * 0x4000));

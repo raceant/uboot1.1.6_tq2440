@@ -78,7 +78,7 @@
 #define CONFIG_COMMANDS \
 			(CONFIG_CMD_DFL	 | \
 			CFG_CMD_CACHE	 | \
-			/*CFG_CMD_NAND	 |*/ \
+			CFG_CMD_NAND	 | \
 			/*CFG_CMD_EEPROM |*/ \
 			/*CFG_CMD_I2C	 |*/ \
 			/*CFG_CMD_USB	 |*/ \
@@ -176,6 +176,16 @@
 #define CFG_FLASH_WRITE_TOUT	(5*CFG_HZ) /* Timeout for Flash Write */
 
 #define	CFG_ENV_IS_IN_FLASH	1
+#define CFG_ENV_IS_IN_NAND		1
+#define CFG_ENV_OFFSET			0x40000
+#define CFG_ENV_SIZE64		0xc000	/* Total Size of Environment Sector */
 #define CFG_ENV_SIZE		0x20000	/* Total Size of Environment Sector */
+
+/*-----------------------------------------------------------------------
+ *  * NAND flash settings
+ *  */
+#define CFG_NAND_BASE			0
+#define CFG_MAX_NAND_DEVICE		1
+#define NAND_MAX_CHIPS			1
 
 #endif	/* __CONFIG_H */

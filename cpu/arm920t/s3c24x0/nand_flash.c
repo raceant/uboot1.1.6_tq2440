@@ -1,5 +1,5 @@
 /*
- * Nand flash interface of s3c2410/s3c2440, by www.embedsky.net
+ * Nand flash interface of s3c2410/s3c2440, by LL
  * Changed from drivers/mtd/nand/s3c2410.c of kernel 2.6.13
  */
 

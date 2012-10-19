@@ -74,6 +74,12 @@
 
 #define CONFIG_BAUDRATE		115200
 
+/* for tag(s) to transfer message to kernel, www.embedsky.net */
+#define CONFIG_SETUP_MEMORY_TAGS		1
+#define CONFIG_CMDLINE_TAG			1
+
+#define CONFIG_INITRD_TAG			1
+
 /***********************************************************
  * Command definition
  ***********************************************************/
@@ -92,13 +98,13 @@
 #include <cmd_confdefs.h>
 
 #define CONFIG_BOOTDELAY	3
-/*#define CONFIG_BOOTARGS	"root=ramfs devfs=mount console=ttySA0,9600" */
+#define CONFIG_BOOTARGS			"noinitrd root=/dev/mtdblock2 init=/linuxrc console=ttySAC0"
 #define CONFIG_ETHADDR		00:01:02:03:0a:0b
 #define CONFIG_NETMASK      255.255.255.0
 #define CONFIG_IPADDR		192.168.1.6
 #define CONFIG_SERVERIP		192.168.1.219
 /*#define CONFIG_BOOTFILE	"elinos-lart" */
-/*#define CONFIG_BOOTCOMMAND	"tftp; bootm" */
+#define CONFIG_BOOTCOMMAND	"nboot 0x32000000 kernel; bootm 0x32000000"
 
 #if (CONFIG_COMMANDS & CFG_CMD_KGDB)
 #define CONFIG_KGDB_BAUDRATE	115200		/* speed to run kgdb serial port */

@@ -374,7 +374,7 @@ extern unsigned int __machine_arch_type;
 #define MACH_TYPE_IXP421_DNAEETH       359
 #define MACH_TYPE_POCKETSERV9200       360
 #define MACH_TYPE_TOTO                 361
-#define MACH_TYPE_S3C2440              362
+#define MACH_TYPE_S3C2440              168
 #define MACH_TYPE_KS8695P              363
 #define MACH_TYPE_SE4000               364
 #define MACH_TYPE_QUADRICEPS           365

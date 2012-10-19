@@ -23,6 +23,8 @@ a.out
 cscope*
 tags
 .depend
+*.bin
+*.img
 
 # This is creat by mkconfig
 # #####################

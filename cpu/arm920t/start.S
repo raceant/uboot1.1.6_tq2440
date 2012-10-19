@@ -160,7 +160,7 @@ reset:
 	 * not when booting from ram!
 	 */
 #ifndef CONFIG_SKIP_LOWLEVEL_INIT
-	@bl	cpu_init_crit
+	bl	cpu_init_crit
 #endif
 
 	/* Set up the stack						    */
@@ -184,13 +184,18 @@ relocate:				/* relocate U-Boot to RAM	    */
 	ldr	r2, _armboot_start
 	ldr	r3, _bss_start
 	sub	r2, r3, r2		/* r2 <- size of armboot            */
-	add	r2, r0, r2		/* r2 <- source end address         */
 
+#if 1		// Add by ll
+	bl	CopyCode2Ram
+#else
+	add	r2, r0, r2		/* r2 <- source end address         */
 copy_loop:
 	ldmia	r0!, {r3-r10}		/* copy from source address [r0]    */
 	stmia	r1!, {r3-r10}		/* copy to   target address [r1]    */
 	cmp	r0, r2			/* until source end addreee [r2]    */
 	ble	copy_loop
+#endif  /* CopyCode */
+
 #endif	/* CONFIG_SKIP_RELOCATE_UBOOT */
 
 clear_bss:

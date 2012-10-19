@@ -907,7 +907,7 @@ static int nand_write_page (struct mtd_info *mtd, struct nand_chip *this, int pa
 	switch (eccmode) {
 	/* No ecc, write all */
 	case NAND_ECC_NONE:
-		printk (KERN_WARNING "Writing data without ECC to NAND-FLASH is not recommended\n");
+		//printk (KERN_WARNING "Writing data without ECC to NAND-FLASH is not recommended\n");
 		this->write_buf(mtd, this->data_poi, mtd->oobblock);
 		break;
 

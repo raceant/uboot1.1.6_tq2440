@@ -78,6 +78,10 @@ struct nand_write_options {
 	int pad;		/* pad to page size */
 	int blockalign;		/* 1|2|4 set multiple of eraseblocks
 				 * to align to */
+	int skipfirstblk;   /* if true, skip the first good block,
+						 * set true when write the yaffs image,
+						 * add by ll 2012-10-19
+						 * */
 };
 
 typedef struct nand_write_options nand_write_options_t;

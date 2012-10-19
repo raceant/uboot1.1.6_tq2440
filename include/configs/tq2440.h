@@ -80,6 +80,19 @@
 
 #define CONFIG_INITRD_TAG			1
 
+#define CONFIG_JFFS2_CMDLINE		1
+#define CONFIG_JFFS2_NAND		1
+
+#define MTDIDS_DEFAULT			"nand0=nandflash0"
+
+#define MTDPARTS_DEFAULT		"mtdparts=nandflash0:256k@0(bios)," \
+								 "128k(params)," \
+								 "128k(toc)," \
+								 "512k(eboot)," \
+								 "1024k(logo)," \
+								 "3m(kernel)," \
+								 "-(root)"
+
 /***********************************************************
  * Command definition
  ***********************************************************/
@@ -87,6 +100,7 @@
 			(CONFIG_CMD_DFL	 | \
 			CFG_CMD_CACHE	 | \
 			CFG_CMD_NAND	 | \
+			CFG_CMD_JFFS2	 | \
 			/*CFG_CMD_EEPROM |*/ \
 			/*CFG_CMD_I2C	 |*/ \
 			/*CFG_CMD_USB	 |*/ \
@@ -104,7 +118,7 @@
 #define CONFIG_IPADDR		192.168.1.6
 #define CONFIG_SERVERIP		192.168.1.219
 /*#define CONFIG_BOOTFILE	"elinos-lart" */
-#define CONFIG_BOOTCOMMAND	"nboot 0x32000000 kernel; bootm 0x32000000"
+#define CONFIG_BOOTCOMMAND	"nand read 0x31000000 0x200000 0x300000;bootm 0x31000000"
 
 #if (CONFIG_COMMANDS & CFG_CMD_KGDB)
 #define CONFIG_KGDB_BAUDRATE	115200		/* speed to run kgdb serial port */

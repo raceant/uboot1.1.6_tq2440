@@ -118,7 +118,8 @@
 #define CONFIG_IPADDR		192.168.1.6
 #define CONFIG_SERVERIP		192.168.1.219
 /*#define CONFIG_BOOTFILE	"elinos-lart" */
-#define CONFIG_BOOTCOMMAND	"nand read 0x31000000 0x200000 0x300000;bootm 0x31000000"
+// #define CONFIG_BOOTCOMMAND	"nand read 0x31000000 0x200000 0x300000;bootm 0x31000000"
+#define CONFIG_BOOTCOMMAND	"boot_zImage"
 
 #if (CONFIG_COMMANDS & CFG_CMD_KGDB)
 #define CONFIG_KGDB_BAUDRATE	115200		/* speed to run kgdb serial port */

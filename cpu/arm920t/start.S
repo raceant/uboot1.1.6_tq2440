@@ -90,6 +90,14 @@ _bss_start:
 _bss_end:
 	.word _end
 
+.globl FREE_RAM_END
+FREE_RAM_END:
+	.word	0x0badc0de
+
+.globl FREE_RAM_SIZE
+FREE_RAM_SIZE:
+	.word	0x0badc0de
+
 #ifdef CONFIG_USE_IRQ
 /* IRQ stack memory (calculated at run-time) */
 .globl IRQ_STACK_START
@@ -413,10 +421,22 @@ not_used:
 
 	.align	5
 irq:
+/*  		modif by ll 2012-11-02
 	get_irq_stack
 	irq_save_user_regs
 	bl 	do_irq
 	irq_restore_user_regs
+*/
+/* use IRQ for USB and DMA */
+	sub    lr, lr, #4             @ the return address
+	ldr    sp, IRQ_STACK_START     @ the stack for irq
+	stmdb  sp!,   { r0-r12,lr }    @ save registers
+
+	ldr    lr, =int_return         @ set the return addr
+	ldr    pc, =IRQ_Handle         @ call the isr
+int_return:
+	ldmia  sp!,   { r0-r12,pc }^    @ return from interrupt
+/* end modif by ll */
 
 	.align	5
 fiq:

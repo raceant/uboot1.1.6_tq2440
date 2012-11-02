@@ -80,6 +80,10 @@ extern void cs8900_get_enetaddr (uchar * addr);
 extern void rtl8019_get_enetaddr (uchar * addr);
 #endif
 
+#ifdef CONFIG_USB_DEVICE
+extern void usb_init(void);
+#endif
+
 /*
  * Begin and End of memory area for malloc(), and current "brk"
  */
@@ -360,8 +364,11 @@ void start_armboot (void)
 	misc_init_r ();
 #endif
 
+	Port_Init();		/* add by ll 2012-11-02 */
 	/* enable exceptions */
 	enable_interrupts ();
+
+	usb_init();			/* add by ll 2012-11-02 */
 
 	/* Perform network card initialisation if necessary */
 #ifdef CONFIG_DRIVER_CS8900

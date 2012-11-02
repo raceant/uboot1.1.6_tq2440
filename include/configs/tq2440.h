@@ -40,6 +40,11 @@
 /* input clock of PLL */
 #define CONFIG_SYS_CLK_FREQ	12000000/* the TQ2440 has 12MHz input clock */
 
+#define CONFIG_USB_DEVICE		1
+
+#ifdef CONFIG_USB_DEVICE
+#define CONFIG_USE_IRQ			1
+#endif
 
 #define USE_920T_MMU		1
 #undef CONFIG_USE_IRQ			/* we don't need IRQ/FIQ stuff */

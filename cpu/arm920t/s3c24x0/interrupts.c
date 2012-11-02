@@ -54,6 +54,13 @@ static inline ulong READ_TIMER(void)
 static ulong timestamp;
 static ulong lastdec;
 
+// start add by ll 2012-11-02
+int arch_interrupt_init (void)
+{
+	return 0;
+}
+// end ll
+
 int interrupt_init (void)
 {
 	S3C24X0_TIMERS * const timers = S3C24X0_GetBase_TIMERS();

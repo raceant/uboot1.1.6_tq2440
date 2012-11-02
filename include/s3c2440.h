@@ -200,7 +200,7 @@ static inline S3C2410_SDI * const S3C2410_GetBase_SDI(void)
 #define BIT_EINT8_23		(0x1<<5)
 #define BIT_BAT_FLT		(0x1<<7)
 #define BIT_TICK		(0x1<<8)
-#define BIT_WDT			(0x1<<9)
+#define BIT_WDT_AC97			(0x1<<9)  /* modif by ll for usb_slave */
 #define BIT_TIMER0		(0x1<<10)
 #define BIT_TIMER1		(0x1<<11)
 #define BIT_TIMER2		(0x1<<12)

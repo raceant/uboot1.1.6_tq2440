@@ -207,6 +207,7 @@ LIBS += drivers/libdrivers.a
 LIBS += drivers/nand/libnand.a
 LIBS += drivers/nand_legacy/libnand_legacy.a
 LIBS += drivers/sk98lin/libsk98lin.a
+LIBS += drivers/usb/slave/libusb_slave.a  # Add by ll 2012-11-02 
 LIBS += post/libpost.a post/cpu/libcpu.a
 LIBS += common/libcommon.a
 LIBS += $(BOARDLIBS)

@@ -281,9 +281,15 @@ int do_nand(cmd_tbl_t * cmdtp, int flag, int argc, char *argv[])
 			     "if you\n"
 			     "         "
 			     "are sure of what you are doing!\n"
-			     "\nReally scrub this NAND flash? <y/N>\n");
+			     "\nReally scrub this NAND flash? <y/N> : ");
 
-			if (getc() == 'y' && getc() == '\r') {
+			//if (getc() == 'y' && getc() == '\r') {
+			//	opts.scrub = 1;
+			if (getc() == 'y' )
+			{
+				printf("y");
+				getc() == '\r';
+				printf("\n");
 				opts.scrub = 1;
 			} else {
 				puts("scrub aborted\n");

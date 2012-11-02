@@ -72,7 +72,7 @@ void main_menu_usage(char menu_type)
 		printf("[5] Set TFTP parameters(PC IP,TQ2440 IP,Mask IP...)\r\n");
 	}
 	printf("[6] Download YAFFS image (root.bin) to Nand Flash\r\n");
-	printf("[7] Download Program (uCOS-II or TQ2440_Test) to SDRAM and Run it\r\n");
+	printf("[7] Download Program to SDRAM and Run it\r\n");
 
 	printf("[8] Boot the system\r\n");
 	printf("[9] Format the Nand Flash\r\n");
@@ -83,6 +83,9 @@ void main_menu_usage(char menu_type)
 
 	if (bBootFrmNORFlash())
 		printf("[o] Download u-boot to Nor Flash\r\n");
+
+	if( menu_type == USE_TFTP_DOWN)
+		printf("[p] Test network (TQ2440 Ping PC's IP) \r\n");
 
 	printf("[r] Reboot u-boot\r\n");
 	printf("[t] Test Linux Image (zImage)\r\n");
@@ -113,8 +116,7 @@ void tftp_menu_shell(void)
 		case '1':
 			{
 				strcpy(cmd_buf, "tftp 0x30000000 u-boot.bin; nand erase bios; nand write.jffs2 0x30000000 bios $(filesize)");
-				puts(cmd_buf);
-				printf("\n");
+				printf("cmd:\"%s\"\n",cmd_buf);
 				run_command(cmd_buf, 0);
 				break;
 			}
@@ -122,8 +124,7 @@ void tftp_menu_shell(void)
 		case '3':
 			{
 				strcpy(cmd_buf, "tftp 0x30000000 zImage.bin; nand erase kernel; nand write.jffs2 0x30000000 kernel $(filesize)");
-				puts(cmd_buf);
-				printf("\n");
+				printf("cmd:\"%s\"\n",cmd_buf);
 				run_command(cmd_buf, 0);
 				break;
 			}
@@ -171,8 +172,7 @@ void tftp_menu_shell(void)
 		case '6':
 			{
 				strcpy(cmd_buf, "tftp 0x30000000 root.bin; nand erase root; nand write.yaffs 0x30000000 root $(filesize)");
-				puts(cmd_buf);
-				printf("\n");
+				printf("cmd:\"%s\"\n",cmd_buf);
 				run_command(cmd_buf, 0);
 				break;
 			}
@@ -202,8 +202,7 @@ void tftp_menu_shell(void)
 			{
 				printf("Start Linux ...\n");
 				strcpy(cmd_buf, "boot_zImage");
-				puts(cmd_buf);
-				printf("\n");
+				printf("cmd:\"%s\"\n",cmd_buf);
 				run_command(cmd_buf, 0);
 				break;
 			}
@@ -211,10 +210,20 @@ void tftp_menu_shell(void)
 			case '9':
 			{
 				strcpy(cmd_buf, "nand scrub ");
-				puts(cmd_buf);
-				printf("\n");
+				printf("cmd:\"%s\"\n",cmd_buf);
 				run_command(cmd_buf, 0);
 				//erase_menu_shell();
+				break;
+			}
+
+			case 'P':
+			case 'p':
+			{
+				char *serverip;
+				serverip=getenv("serverip");
+				printf("TQ2440 ping PC IP:ping %s\n",serverip);
+				sprintf(cmd_buf, "ping %s",serverip);
+				run_command(cmd_buf, 0);
 				break;
 			}
 
@@ -230,8 +239,7 @@ void tftp_menu_shell(void)
 		case 't':
 			{
 				strcpy(cmd_buf, "tftp 0x30008000 zImage.bin; test_zImage");
-				puts(cmd_buf);
-				printf("\n");
+				printf("cmd:\"%s\"\n",cmd_buf);
 				run_command(cmd_buf, 0);
 				break;
 			}

@@ -99,6 +99,7 @@
 #define CONFIG_COMMANDS \
 			(CONFIG_CMD_DFL	 | \
 			CFG_CMD_CACHE	 | \
+			CFG_CMD_PING	 | \
 			CFG_CMD_NAND	 | \
 			CFG_CMD_JFFS2	 | \
 			/*CFG_CMD_EEPROM |*/ \

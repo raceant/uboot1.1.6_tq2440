@@ -79,29 +79,114 @@ void main_menu_usage(char menu_type)
 	printf("[9] Format the Nand Flash\r\n");
 	if( menu_type == USE_USB_DOWN)
 	{
-		printf("[n] Enter TFTP download mode menu \r\n");
+		// printf("[n] Enter TFTP download mode menu \r\n");
 	}
 
 	if (bBootFrmNORFlash())
-		printf("[o] Download u-boot to Nor Flash\r\n");
+		// printf("[o] Download u-boot to Nor Flash\r\n");
 
 	if( menu_type == USE_TFTP_DOWN) {
 		printf("[p] Test network (TQ2440 Ping PC's IP) \r\n");
-		printf("[u] Enter USB download mode menu \r\n");
+		// printf("[u] Enter USB download mode menu \r\n");
 	}
 
 	printf("[r] Reboot u-boot\r\n");
 	printf("[t] Test Linux Image (zImage)\r\n");
-	if( menu_type == USE_USB_DOWN)
-	{
-		printf("[q] quit from menu\r\n");
-	}
-	else if( menu_type == USE_TFTP_DOWN)
-	{
-		printf("[q] Return main Menu \r\n");
-	}
+	printf("[q] quit from this menu\r\n");
 
 	printf("Enter your selection: ");
+}
+void usb_menu_shell(void)
+{
+	char c;
+	char cmd_buf[200];
+
+	while (1)
+	{
+		main_menu_usage(USE_USB_DOWN);
+		c = awaitkey(-1, NULL);
+		printf("%c\n", c);
+		switch (c)
+		{
+		case '1':
+			{
+				strcpy(cmd_buf, "usbslave 1 0x30000000; nand erase bios; nand write.jffs2 0x30000000 bios $(filesize)");
+				printf("cmd:\"%s\"\n",cmd_buf);
+				run_command(cmd_buf, 0);
+				break;
+			}
+		case '3':
+			{
+				strcpy(cmd_buf, "usbslave 1 0x30000000; nand erase kernel; nand write.jffs2 0x30000000 kernel $(filesize)");
+				printf("cmd:\"%s\"\n",cmd_buf);
+				run_command(cmd_buf, 0);
+				break;
+			}
+		case '6':
+			{
+				strcpy(cmd_buf, "usbslave 1 0x30000000; nand erase root; nand write.yaffs 0x30000000 root $(filesize)");
+				printf("cmd:\"%s\"\n",cmd_buf);
+				run_command(cmd_buf, 0);
+				break;
+			}
+		case '7':
+			{
+				extern volatile U32 downloadAddress;
+				extern int download_run;
+
+				download_run = 1;
+				strcpy(cmd_buf, "usbslave 1");
+				printf("cmd:\"%s\"\n",cmd_buf);
+				run_command(cmd_buf, 0);
+				download_run = 0;
+				sprintf(cmd_buf, "go %x", downloadAddress);
+				run_command(cmd_buf, 0);
+				break;
+			}
+		case '8':
+			{
+				printf("Start Linux ...\n");
+				strcpy(cmd_buf, "boot_zImage");
+				printf("cmd:\"%s\"\n",cmd_buf);
+				run_command(cmd_buf, 0);
+				break;
+			}
+
+		case '9':
+			{
+				strcpy(cmd_buf, "nand scrub ");
+				printf("cmd:\"%s\"\n",cmd_buf);
+				run_command(cmd_buf, 0);
+				//erase_menu_shell();
+				break;
+			}
+		case 'R':
+		case 'r':
+			{
+				strcpy(cmd_buf, "reset");
+				printf("cmd:\"%s\"\n",cmd_buf);
+				run_command(cmd_buf, 0);
+				break;
+			}
+
+		case 'T':
+		case 't':
+			{
+				strcpy(cmd_buf, "usbslave 1 0x30008000; test_zImage");
+				printf("cmd:\"%s\"\n",cmd_buf);
+				run_command(cmd_buf, 0);
+				break;
+			}
+
+		case 'Q':
+		case 'q':
+			{
+				return;
+				break;
+			}
+
+		}
+	}
 }
 
 void tftp_menu_shell(void)
@@ -259,7 +344,39 @@ void tftp_menu_shell(void)
 }
 void menu_shell(void)
 {
-	tftp_menu_shell();
+	char c;
+	while (1)
+	{
+		printf("\r\n#####	Main Menu	#####\r\n");
+		printf("[u] Enter USB download mode menu \r\n");
+		printf("[n] Enter TFTP download mode menu \r\n");
+		printf("[q] quit from menu \r\n");
+		printf("Enter your selection: ");
+
+		c = awaitkey(-1, NULL);
+		printf("%c\n", c);
+		switch (c)
+		{
+		case 'u':
+		case 'U':
+			{
+				usb_menu_shell();
+				break;
+			}
+		case 'n':
+		case 'N':
+			{
+				tftp_menu_shell();
+				break;
+			}
+		case 'Q':
+		case 'q':
+			{
+				return;
+				break;
+			}
+		}
+	}
 }
 
 int do_menu (cmd_tbl_t *cmdtp, int flag, int argc, char *argv[])

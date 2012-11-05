@@ -224,6 +224,13 @@ void usb_init_slave(void)
 	U32 mpll_val, upll_val, divn_upll=0;
 	extern int bBootFrmNORFlash(void);
 
+	/* start add by ll ,replace the Port_Init() */
+	gpioregs = S3C24X0_GetBase_GPIO();
+	gpioregs->GPGCON = 0xfd95ffba;	/* thisway.diy, GPG12-->OUTPUT, GPG9-->OUTPUT for FS2410, as USB Device enable */
+	gpioregs->GPGUP  = 0xffff;	// The pull up function is disabled GPG[15:0]
+	gpioregs->GPGDAT &= ~(1<<12);	/* disable USB Device, enable later, thisway.diy */
+	/* end ll */
+
 	clk_powerregs = S3C24X0_GetBase_CLOCK_POWER();
 
 	usbdevregs = S3C24X0_GetBase_USB_DEVICE();

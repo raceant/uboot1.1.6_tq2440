@@ -76,6 +76,7 @@ int board_init (void)
 	gpio->GPACON = 0x007FFFFF;
 	gpio->GPBCON = 0x00044555;
 	gpio->GPBUP = 0x000007FF;
+	gpio->GPBDAT &= ~(1<<0);	/* 禁止蜂鸣器 */
 	gpio->GPCCON = 0xAAAAAAAA;
 	gpio->GPCUP = 0x0000FFFF;
 	gpio->GPDCON = 0xAAAAAAAA;
@@ -84,10 +85,17 @@ int board_init (void)
 	gpio->GPEUP = 0x0000FFFF;
 	gpio->GPFCON = 0x000055AA;
 	gpio->GPFUP = 0x000000FF;
-	gpio->GPGCON = 0xFF95FFBA;
+	gpio->GPGCON = 0xFD95FFBA; /* GPG12-->OUTPUT, GPG9-->OUTPUT for FS2410, as USB Device enable */
 	gpio->GPGUP = 0x0000FFFF;
 	gpio->GPHCON = 0x002AFAAA;
 	gpio->GPHUP = 0x000007FF;
+	gpio->GPJCON = 0x02aaaaaa;
+	gpio->GPJUP  = 0x1fff;	// The pull up function is disabled GPH[10:0]
+
+	//External interrupt will be falling edge triggered.
+	gpio->EXTINT0 = 0x22222222;	// EINT[7:0]
+	gpio->EXTINT1 = 0x22222222;	// EINT[15:8]
+	gpio->EXTINT2 = 0x22222222;	// EINT[23:16]
 
 	/* arch number of TQ2440-Board */
 	gd->bd->bi_arch_number = MACH_TYPE_S3C2440;

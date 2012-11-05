@@ -366,7 +366,7 @@ void start_armboot (void)
 #endif
 
 #ifdef CONFIG_USB_DEVICE
-	Port_Init();		/* add by ll 2012-11-02 */
+	//Port_Init();		/* add by ll 2012-11-02 */
 #endif
 	/* enable exceptions */
 	enable_interrupts ();

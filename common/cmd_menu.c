@@ -347,10 +347,10 @@ void menu_shell(void)
 	char c;
 	while (1)
 	{
-		printf("\r\n#####	Main Menu	#####\r\n");
+		printf("\r\n#####		Main Menu	#####\r\n\n");
 		printf("[u] Enter USB download mode menu \r\n");
 		printf("[n] Enter TFTP download mode menu \r\n");
-		printf("[q] quit from menu \r\n");
+		printf("[q] quit from menu \r\n\n");
 		printf("Enter your selection: ");
 
 		c = awaitkey(-1, NULL);

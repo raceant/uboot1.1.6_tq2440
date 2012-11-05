@@ -200,7 +200,7 @@ LIBS += lib_$(ARCH)/lib$(ARCH).a
 LIBS += fs/cramfs/libcramfs.a fs/fat/libfat.a fs/fdos/libfdos.a fs/jffs2/libjffs2.a \
 	fs/reiserfs/libreiserfs.a fs/ext2/libext2fs.a
 LIBS += net/libnet.a
-LIBS += disk/libdisk.a
+#LIBS += disk/libdisk.a
 LIBS += rtc/librtc.a
 LIBS += dtt/libdtt.a
 LIBS += drivers/libdrivers.a
@@ -304,14 +304,14 @@ tags ctags:
 		ctags -w -o $(OBJTREE)/ctags `find $(SUBDIRS) include \
 				lib_generic board/$(BOARDDIR) cpu/$(CPU) lib_$(ARCH) \
 				fs/cramfs fs/fat fs/fdos fs/jffs2 \
-				net disk rtc dtt drivers drivers/sk98lin common \
+				net rtc dtt drivers drivers/sk98lin common \
 			\( -name CVS -prune \) -o \( -name '*.[ch]' -print \)`
 
 etags:
 		etags -a -o $(OBJTREE)/etags `find $(SUBDIRS) include \
 				lib_generic board/$(BOARDDIR) cpu/$(CPU) lib_$(ARCH) \
 				fs/cramfs fs/fat fs/fdos fs/jffs2 \
-				net disk rtc dtt drivers drivers/sk98lin common \
+				net rtc dtt drivers drivers/sk98lin common \
 			\( -name CVS -prune \) -o \( -name '*.[ch]' -print \)`
 
 $(obj)System.map:	$(obj)u-boot

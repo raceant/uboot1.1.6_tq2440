@@ -47,7 +47,6 @@
 #endif
 
 #define USE_920T_MMU		1
-#undef CONFIG_USE_IRQ			/* we don't need IRQ/FIQ stuff */
 
 /*
  * Size of malloc() pool

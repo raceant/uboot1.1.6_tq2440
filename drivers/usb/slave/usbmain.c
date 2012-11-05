@@ -24,37 +24,37 @@
 
 extern S3C24X0_USB_DEVICE * usbdevregs;
 extern S3C24X0_DMAS * dmaregs;
-    
+
 /**************************
     Some PrepareEp1Fifo() should be deleted
- **************************/   
+ **************************/
 
 void UsbdMain(void)
 {
     int i;
     U8 tmp1;
     U8 oldTmp1=0xff;
-    
-    //ChangeUPllValue(0x38,2,1);	// UCLK=96Mhz     
-    //ChangeUPllValue(0x38,2,2);	// UCLK=48Mhz     
+
+    //ChangeUPllValue(0x38,2,1);	// UCLK=96Mhz
+    //ChangeUPllValue(0x38,2,2);	// UCLK=48Mhz
     InitDescriptorTable();
     //ResetUsbd();
-    
-    ConfigUsbd(); 
+
+    ConfigUsbd();
 
     //DetectVbus(); //not used in S3C2400X
 
-    PrepareEp1Fifo(); 
-#if 0    
+    PrepareEp1Fifo();
+#if 0
     while(1)
     {
     	if(DbgPrintfLoop())continue;
-    	
+
     	Delay(5000);
     	if((i++%2)==0)Led_Display(0x8);
     	else Led_Display(0x0);
     }
-#endif    
+#endif
 }
 
 
@@ -78,31 +78,31 @@ void IsrUsbd(void)
     }
     if(usbdIntpnd&RESET_INT)
     {
-    	DbgPrintf( "<RST] ReconfigUsbd\n");  
-    	
+    	DbgPrintf( "<RST] ReconfigUsbd\n");
+
     	//ResetUsbd();
     	ReconfigUsbd();
 
-    	usbdevregs->USB_INT_REG=RESET_INT;  //RESET_INT should be cleared after ResetUsbd().   	
+    	usbdevregs->USB_INT_REG=RESET_INT;  //RESET_INT should be cleared after ResetUsbd().
 
-        PrepareEp1Fifo(); 
+        PrepareEp1Fifo();
     }
 
     if(epIntpnd&EP0_INT)
     {
-	    usbdevregs->EP_INT_REG=EP0_INT;  
+	    usbdevregs->EP_INT_REG=EP0_INT;
     	Ep0Handler();
     }
     if(epIntpnd&EP1_INT)
     {
-    	usbdevregs->EP_INT_REG=EP1_INT;  
+    	usbdevregs->EP_INT_REG=EP1_INT;
     	Ep1Handler();
     }
 
     if(epIntpnd&EP2_INT)
     {
-    	usbdevregs->EP_INT_REG=EP2_INT;  
-    	DbgPrintf("<2:TBD]\n");   //not implemented yet	
+    	usbdevregs->EP_INT_REG=EP2_INT;
+    	DbgPrintf("<2:TBD]\n");   //not implemented yet
     	//Ep2Handler();
     }
 
@@ -115,12 +115,12 @@ void IsrUsbd(void)
     if(epIntpnd&EP4_INT)
     {
     	usbdevregs->EP_INT_REG=EP4_INT;
-    	DbgPrintf("<4:TBD]\n");   //not implemented yet	
+    	DbgPrintf("<4:TBD]\n");   //not implemented yet
     	//Ep4Handler();
     }
 
-    ClearPending_my(BIT_USBD);	 
-    
+    ClearPending_my(BIT_USBD);
+
     usbdevregs->INDEX_REG=saveIndexReg;
 }
 
@@ -153,12 +153,12 @@ void DbgPrintf(char *fmt,...)
 
     va_start(ap,fmt);
     vsprintf(string,fmt,ap);
-    
+
 //    slen=strlen(string);
-    
+
 //    for(i=0;i<slen;i++)
 //    	_WrDbgStrFifo(string[i]);
-    
+
     va_end(ap);
     puts(string);
 }

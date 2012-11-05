@@ -20,6 +20,8 @@ extern char b128MB;				//HJ_add 20090807
 extern int NF_ReadID(void);			//HJ_add 20090807
 //extern int nand_read_ll_lcd(unsigned char*, unsigned long, int);
 //extern int nand_read_ll_lp_lcd(unsigned char*, unsigned long, int);
+extern int nand_read_ll(unsigned char*, unsigned long, int);
+extern int nand_read_ll_lp(unsigned char*, unsigned long, int);
 
 /*
  * Disable IRQs

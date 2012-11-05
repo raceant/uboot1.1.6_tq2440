@@ -261,7 +261,7 @@ void do_bootm_linux (cmd_tbl_t *cmdtp, int flag, int argc, char *argv[],
 #ifdef CONFIG_USB_DEVICE
 	{
 		extern void udc_disconnect (void);
-		udc_disconnect ();
+		// udc_disconnect ();    // cancled by ll 2012-11-05
 	}
 #endif
 

@@ -81,7 +81,8 @@ extern void rtl8019_get_enetaddr (uchar * addr);
 #endif
 
 #ifdef CONFIG_USB_DEVICE
-extern void usb_init(void);
+extern void Port_Init(void);
+extern void usb_init_slave(void);
 #endif
 
 /*
@@ -364,11 +365,15 @@ void start_armboot (void)
 	misc_init_r ();
 #endif
 
+#ifdef CONFIG_USB_DEVICE
 	Port_Init();		/* add by ll 2012-11-02 */
+#endif
 	/* enable exceptions */
 	enable_interrupts ();
 
-	usb_init();			/* add by ll 2012-11-02 */
+#ifdef CONFIG_USB_DEVICE
+	usb_init_slave();			/* add by ll 2012-11-02 */
+#endif
 
 	/* Perform network card initialisation if necessary */
 #ifdef CONFIG_DRIVER_CS8900

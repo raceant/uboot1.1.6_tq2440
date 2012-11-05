@@ -10,6 +10,7 @@
 extern char console_buffer[];
 extern int readline (const char *const prompt);
 extern int boot_zImage(ulong from, size_t size);
+extern int bBootFrmNORFlash();
 
 #define USE_TFTP_DOWN		1
 #define USE_USB_DOWN		2
@@ -65,7 +66,7 @@ void main_menu_usage(char menu_type)
 	printf("[3] Download Linux Kernel (zImage.bin) to Nand Flash\r\n");
 	if( menu_type == USE_USB_DOWN)
 	{
-		printf("[5] Download CRAMFS image to Nand Flash\r\n");
+	//	printf("[5] Download CRAMFS image to Nand Flash\r\n");
 	}
 	else if( menu_type == USE_TFTP_DOWN)
 	{
@@ -84,8 +85,10 @@ void main_menu_usage(char menu_type)
 	if (bBootFrmNORFlash())
 		printf("[o] Download u-boot to Nor Flash\r\n");
 
-	if( menu_type == USE_TFTP_DOWN)
+	if( menu_type == USE_TFTP_DOWN) {
 		printf("[p] Test network (TQ2440 Ping PC's IP) \r\n");
+		printf("[u] Enter USB download mode menu \r\n");
+	}
 
 	printf("[r] Reboot u-boot\r\n");
 	printf("[t] Test Linux Image (zImage)\r\n");
